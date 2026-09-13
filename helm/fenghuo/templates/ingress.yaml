@@ -8,7 +8,10 @@ metadata:
 spec:
   ingressClassName: {{ .Values.ingress.className }}
   rules:
-    - host: {{ .Values.ingress.host }}
+    # host 留空时匹配任意 Host 头，用于直接以 IP 访问（k8s 不允许 host 填 IP）
+    - {{- with .Values.ingress.host }}
+      host: {{ . }}
+      {{- end }}
       http:
         paths:
           - path: {{ .Values.ingress.path | quote }}

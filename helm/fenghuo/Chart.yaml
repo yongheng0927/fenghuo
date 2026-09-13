@@ -1,5 +1,5 @@
 apiVersion: v2
-appVersion: 0.1.0
+appVersion: 0.1.1
 description: Fenghuo（烽火台）告警聚合与分发平台（需外部 PostgreSQL）
 keywords:
 - alert
@@ -7,4 +7,4 @@ keywords:
 - fenghuo
 name: fenghuo
 type: application
-version: 0.2.0
+version: 0.1.1

@@ -11,8 +11,8 @@ import (
 	"github.com/yongheng0927/fenghuo/internal/config"
 )
 
-// Version 是 /api/v1/system/info 上报的应用版本号
-const Version = "0.1.0"
+// Version 是 /api/v1/system/info 上报的应用版本号（发布时需与镜像 tag 同步更新）
+const Version = "0.1.1"
 
 // SystemHandler 提供健康/就绪探针和系统信息接口
 type SystemHandler struct {

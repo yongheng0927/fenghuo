@@ -259,7 +259,7 @@ FENGHUO_SERVER_HTTP_ADDR=0.0.0.0:8080                       # 监听地址
 - 仅支持两种部署方式：Docker 镜像（含 docker compose）与 Helm chart（K8s）；不发布、不文档化裸二进制部署（本地开发 `go run` 不受限）。
 - 提供 Dockerfile（多阶段构建，前端产物内嵌）。
 - 提供 docker-compose.yml（app + PostgreSQL 18）一键起 demo。
-- 提供 Helm chart（`deploy/helm`）：可配置镜像、数据库连接、Ingress、资源限制。
+- 提供 Helm chart（`helm/fenghuo`）：可配置镜像、数据库连接、Ingress、资源限制。
 - 数据库迁移自动执行（gormigrate 或 golang-migrate）。
 
 **NFR-5 兼容性**

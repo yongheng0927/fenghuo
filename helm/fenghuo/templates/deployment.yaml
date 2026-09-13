@@ -26,6 +26,8 @@ spec:
             - name: http
               containerPort: 8080
           env:
+            - name: TZ
+              value: {{ .Values.timezone | quote }}
             - name: FENGHUO_SERVER_HTTP_ADDR
               value: ":8080"
             - name: FENGHUO_SERVER_ROOT_URL

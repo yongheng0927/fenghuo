@@ -10,7 +10,7 @@ image:
 imagePullSecrets: []
 #  - name: harbor-pull-secret
 
-replicaCount: 2
+replicaCount: 1
 
 # 外部访问地址（FR-6），反向代理/子路径部署时改成实际地址
 rootUrl: "http://localhost:8080/"
@@ -41,6 +41,9 @@ oauth:
   allowedEmails: []
   # 首次通过飞书登录时自动创建本地用户
   autoCreateUser: true
+
+# 容器时区（TZ 环境变量）；影响告警模板时间渲染与「今日/本周」统计的自然日边界
+timezone: Asia/Shanghai
 
 logLevel: info
 

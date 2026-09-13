@@ -60,7 +60,7 @@ kubectl create secret generic fenghuo-secrets -n fenghuo \
 安装时通过 `secrets.existingSecret` 引用它（必填，留空时 helm 直接报错）：
 
 ```bash
-helm install fenghuo ./deploy/helm/fenghuo \
+helm install fenghuo ./helm/fenghuo \
   -n fenghuo --create-namespace \
   --set database.host=<数据库地址> \
   --set secrets.existingSecret=fenghuo-secrets
@@ -84,7 +84,7 @@ kubectl port-forward -n fenghuo svc/fenghuo 8080:8080   # 访问 http://localhos
 ### 通过 Higress Ingress 暴露
 
 ```bash
-helm upgrade fenghuo ./deploy/helm/fenghuo -n fenghuo \
+helm upgrade fenghuo ./helm/fenghuo -n fenghuo \
   --set database.host=<数据库地址> \
   --set secrets.existingSecret=fenghuo-secrets \
   --set ingress.enabled=true --set ingress.host=fenghuo.local \
@@ -148,6 +148,7 @@ secrets:
 | `imagePullSecrets` | 私有仓库拉取凭证列表 | `[]` |
 | `replicaCount` | 副本数（>1 需外部数据库，已满足） | `1` |
 | `rootUrl` | 外部访问地址，须以 `/` 结尾 | `http://localhost:8080/` |
+| `timezone` | 容器时区（TZ），影响告警时间渲染与「今日/本周」统计口径 | `Asia/Shanghai` |
 | `database.host` | 外部 PostgreSQL 地址（必填） | `""` |
 | `secrets.existingSecret` | 预先创建的应用 Secret 名称（必填） | `""` |
 | `oauth.enabled` | 飞书 OAuth 登录开关 | `false` |
