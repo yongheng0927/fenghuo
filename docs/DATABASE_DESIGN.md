@@ -21,6 +21,7 @@
 | enabled | BOOLEAN | NOT NULL DEFAULT TRUE | 禁用后 JWT 即时失效 |
 | is_bootstrap | BOOLEAN | NOT NULL DEFAULT FALSE | 引导创建的初始管理员（FR-5.1，setup 接口创建）；受保护不可降级/禁用/删除；部分唯一索引 `uq_users_single_bootstrap` 保证全表至多一行 TRUE |
 | last_login_at | TIMESTAMPTZ | NULL | 最近登录时间 |
+| password_changed_at | TIMESTAMPTZ | NULL | 密码最近修改时间（迁移 0011）；JWTAuth 比较 token 签发时间与该字段，让改密前签发的 access token 立即失效；纯 OAuth 用户为 NULL |
 
 设计说明：
 - `role` 用 VARCHAR 而非 PG ENUM：`ALTER TYPE ... ADD VALUE` 不能在事务里随便跑，VARCHAR 加角色零 DDL

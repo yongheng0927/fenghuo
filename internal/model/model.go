@@ -34,8 +34,11 @@ type User struct {
 	Enabled      bool       `gorm:"column:enabled"`
 	IsBootstrap  bool       `gorm:"column:is_bootstrap"` // 引导创建的初始管理员（受保护，全表至多一行）
 	LastLoginAt  *time.Time `gorm:"column:last_login_at"`
-	CreatedAt    time.Time  `gorm:"column:created_at"`
-	UpdatedAt    time.Time  `gorm:"column:updated_at"`
+	// 密码最近修改时间；改密前签发的 access token 一律失效（迁移 0011）。
+	// 纯 OAuth 用户为 NULL（无本地密码，不参与该校验）
+	PasswordChangedAt *time.Time `gorm:"column:password_changed_at"`
+	CreatedAt         time.Time  `gorm:"column:created_at"`
+	UpdatedAt         time.Time  `gorm:"column:updated_at"`
 }
 
 func (User) TableName() string { return "users" }

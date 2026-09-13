@@ -46,6 +46,15 @@ func JWTAuth(jwtMgr *fafjwt.Manager, users service.UserStore) gin.HandlerFunc {
 			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "account disabled or deleted"})
 			return
 		}
+		// 吊销 refresh token 只能阻止续期，对已签发的无状态 JWT 无效；
+		// 比较 token 签发时间与密码修改时间，让改密（含 reset-admin-password）
+		// 前的 access token 立即失效。iat 精度为秒，同一秒内签发的 token 可能
+		// 残留存活至过期，可接受
+		if user.PasswordChangedAt != nil && claims.IssuedAt != nil &&
+			claims.IssuedAt.Time.Before(*user.PasswordChangedAt) {
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "session invalidated by password change"})
+			return
+		}
 		c.Set(CtxUserID, user.ID)
 		c.Set(CtxUserRole, user.Role)
 		c.Next()

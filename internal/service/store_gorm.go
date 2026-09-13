@@ -109,9 +109,14 @@ func (s *GormUserStore) UpdateLastLogin(ctx context.Context, id int64, t time.Ti
 		Update("last_login_at", t).Error
 }
 
+// UpdatePassword 更新密码哈希并刷新 password_changed_at：JWTAuth 据此让
+// 改密前签发的 access token 立即失效（仅吊销 refresh token 挡不住无状态 JWT）
 func (s *GormUserStore) UpdatePassword(ctx context.Context, id int64, hash string) error {
 	return s.db.WithContext(ctx).Model(&model.User{}).Where("id = ?", id).
-		Update("password_hash", hash).Error
+		Updates(map[string]any{
+			"password_hash":       hash,
+			"password_changed_at": time.Now(),
+		}).Error
 }
 
 // GormRefreshTokenStore 用 GORM/PostgreSQL 实现 RefreshTokenStore

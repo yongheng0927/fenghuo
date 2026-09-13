@@ -29,6 +29,11 @@ func resetAdminPassword(args []string) error {
 	if err := fs.Parse(args); err != nil {
 		return err
 	}
+	// flag 包遇到第一个非 flag 参数即停止解析，位置参数会被静默忽略
+	//（"reset-admin-password MyPass" 不会报错，而是生成随机密码），显式拒绝
+	if fs.NArg() > 0 {
+		return fmt.Errorf("unexpected argument %q: use --password to specify the new password, or omit it to generate a random one", fs.Arg(0))
+	}
 
 	cfg, err := config.Load()
 	if err != nil {
