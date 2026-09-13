@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Alert, Button, Card, Form, Input, Typography } from 'antd'
+import { Alert, Button, Card, Form, Input, Typography, theme } from 'antd'
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
 
@@ -13,6 +13,10 @@ export default function SetupPage() {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  // 页面底色跟随明暗主题（同 LoginPage）
+  const {
+    token: { colorBgLayout },
+  } = theme.useToken()
 
   useEffect(() => {
     // 已完成初始化时不应停留在本页；请求失败则静默留在设置页
@@ -45,7 +49,7 @@ export default function SetupPage() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: '#f0f2f5',
+        background: colorBgLayout,
       }}
     >
       <Card style={{ width: 400, boxShadow: '0 4px 16px rgba(0,0,0,0.08)' }}>

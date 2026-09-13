@@ -76,7 +76,9 @@ export default function AppLayout() {
   }
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    // 高度锁死在视口：滚动只发生在 Content 内部，侧栏（logo/菜单）与
+    // Header 固定不随页面滚动
+    <Layout style={{ height: '100vh' }}>
       <Sider theme="dark" width={208} breakpoint="lg" collapsible collapsed={collapsed} onCollapse={setCollapsed}>
         <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
           <div
@@ -116,7 +118,7 @@ export default function AppLayout() {
           )}
         </div>
       </Sider>
-      <Layout>
+      <Layout style={{ overflow: 'hidden' }}>
         <Header
           style={{
             background: colorBgContainer,

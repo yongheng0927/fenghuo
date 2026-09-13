@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Alert, Button, Card, Divider, Form, Input, Typography } from 'antd'
+import { Alert, Button, Card, Divider, Form, Input, Typography, theme } from 'antd'
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 
@@ -17,6 +17,10 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [sysInfo, setSysInfo] = useState<SystemInfo | null>(null)
+  // 页面底色跟随明暗主题（深色模式下硬编码浅色会露出亮色背景）
+  const {
+    token: { colorBgLayout },
+  } = theme.useToken()
 
   useEffect(() => {
     // system/info 是公开接口（M4）：登录前用它决定是否展示 OAuth 按钮
@@ -63,7 +67,7 @@ export default function LoginPage() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: '#f0f2f5',
+        background: colorBgLayout,
       }}
     >
       <Card style={{ width: 400, boxShadow: '0 4px 16px rgba(0,0,0,0.08)' }}>
